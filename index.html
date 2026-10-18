@@ -9,6 +9,24 @@
 <title>网络工程师 · 刷题</title>
 <meta name="description" content="网络工程师考前刷题：780 道选择题（含 36 道带图题、2 套真题回忆版、2 套冲刺卷、1 套考前密押卷）+ 2 套下午案例整卷（8 道大题 / 150 分）+ 60 张记忆卡，覆盖数据通信、路由交换、IP、无线、安全、管理、法规与华为配置。" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232f6353'/%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='4' stroke-linecap='round' stroke-opacity='.85'%3E%3Cpath d='M18 24h28M18 32h28M18 40h28'/%3E%3Cpath d='M26 18v28M38 18v28'/%3E%3C/g%3E%3C/svg%3E" />
+<script>
+/* 旧地址 → GitHub 版 一次性自动搬运（把本机记录塞进 #mig= 一起带过去） */
+(function(){
+  try{
+    if(location.hostname!=='ne-quiz.app.workbuddy.host') return;
+    var forced = /[?&]pull=1/.test(location.search);
+    if(localStorage.getItem('ne_moved')==='1' && !forced) return;
+    var raw = localStorage.getItem('ne_quiz_v2');
+    if(!raw || raw.length<40) return;
+    var s = JSON.parse(raw);
+    if(!s || !s.ans || !Object.keys(s.ans).length) return;
+    var bytes = new TextEncoder().encode(raw), bin = '';
+    for(var i=0;i<bytes.length;i++) bin += String.fromCharCode(bytes[i]);
+    localStorage.setItem('ne_moved','1');
+    location.replace('https://xzyonline.github.io/ne-quiz/#mig=' + btoa(bin));
+  }catch(e){}
+})();
+</script>
 <style>
 :root{
   --bg:#f4f2ed;
@@ -332,10 +350,15 @@ body.focus .tabbar{transform:translateY(110%);opacity:0;pointer-events:none}
 .bkqa>b{display:block;font-size:10px;letter-spacing:.1em;color:var(--ok);margin-bottom:4px}
 .bkqe{font-size:11.5px;line-height:1.72;color:var(--muted);margin-top:7px}
 /* ---------- 数据迁移 ---------- */
-.mig{display:flex;gap:9px;margin-bottom:9px}
-.mig .btn{flex:1;height:46px;font-size:14px}
+.mig{display:flex;gap:9px;margin-bottom:9px}.mig .btn{flex:1;height:46px;font-size:14px}
 .filein{width:100%;padding:11px;border:1.5px dashed rgba(23,26,31,.18);border-radius:12px;background:#fbfaf7;font-size:12.5px;color:var(--ink-2)}
 .filein::file-selector-button{height:32px;padding:0 12px;margin-right:10px;border:0;border-radius:9px;background:var(--brand);color:#fff;font-size:12.5px;font-weight:600;font-family:inherit}
+.oldpull{display:flex;align-items:center;gap:10px;padding:12px 13px;margin-top:12px;border:1.5px solid rgba(47,99,83,.2);background:#f1f6f3;border-radius:14px}
+.oldpull .ot{flex:1;min-width:0}
+.oldpull .ot b{display:block;font-size:12.5px;color:var(--ink);margin-bottom:2px}
+.oldpull .ot span{font-size:11px;color:var(--muted);line-height:1.55;display:block}
+.oldpull .ob{flex:0 0 auto;height:34px;padding:0 12px;border:0;border-radius:10px;background:var(--brand);color:#fff;font-size:12.5px;font-weight:700;font-family:inherit}
+.oldpull .ox{flex:0 0 auto;width:22px;height:22px;padding:0;border:0;background:none;color:var(--muted);font-size:16px;line-height:1;font-family:inherit}
 /* ---------- toast ---------- */
 .toast{
   position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom));transform:translate(-50%,14px);
@@ -731,6 +754,12 @@ function viewHome(){
     <span class="cd-t">${EXAM_LABEL}<small>${examDateStr()} 开考</small></span>
     <b class="cd-n">${dLeft===0? '今天' : dLeft + '<i>天</i>'}</b>
   </div>`;
+  const pullCard = (location.hostname==='xzyonline.github.io' && total===0 && localStorage.getItem('ne_mig_ask')!=='1') ? `
+  <div class="oldpull">
+    <div class="ot"><b>把旧地址的刷题记录搬过来</b><span>之前存在 ne-quiz.app.workbuddy.host 的答题、错题与掌握度，点一下自动带过来</span></div>
+    <button class="ob" data-act="pullOld">搬过来</button>
+    <button class="ox" data-act="migSkip">×</button>
+  </div>` : '';
   return `
   <header class="topbar">
     <div class="logo">网</div>
@@ -757,6 +786,7 @@ function viewHome(){
   <button class="btn primary block" data-act="daily" style="height:54px">
     ${done>=goal? '继续加练 20 题' : '开始今日练习 · 20 题'}
   </button>
+  ${pullCard}
   <div class="quick">
     <button class="q-card" data-act="random"><span class="q-ico" style="background:#edf1f7;color:#3a5a86">随</span><span><b>随机抽题</b><small>打乱顺序查漏</small></span></button>
     <button class="q-card" data-act="wrong"><span class="q-ico" style="background:#f8efec;color:#9a5238">错</span><span><b>错题重练</b><small>${wrongN} 道待攻克</small></span></button>
@@ -1303,6 +1333,8 @@ document.getElementById('app').addEventListener('click', e=>{
   else if(a==='export') exportProgress();
   else if(a==='import') go('import');
   else if(a==='doImport') doImport();
+  else if(a==='pullOld'){ localStorage.setItem('ne_mig_ask','1'); location.href='https://ne-quiz.app.workbuddy.host/?pull=1'; }
+  else if(a==='migSkip'){ localStorage.setItem('ne_mig_ask','1'); render(); }
   else if(a==='reset'){
     if(confirm('确定清空全部答题记录、错题和掌握标记吗？')){
       store={ans:{},days:{},known:[],fav:[],case:{},cp:{}}; save(); toast('已清空'); render();
@@ -1343,6 +1375,29 @@ document.addEventListener('keydown', e=>{
   }
   if(view==='cards' && (e.key===' '||e.key==='Enter')){ e.preventDefault(); C.flip=!C.flip; render(); }
 });
+/* ---------- 从旧地址自动迁入（#mig=） ---------- */
+function migrateFromHash(){
+  const m = (location.hash||'').match(/^#mig=([A-Za-z0-9+/=]+)$/);
+  if(!m) return false;
+  const clean = ()=>{ try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){} };
+  try{
+    const bin = atob(m[1]);
+    const bytes = new Uint8Array(bin.length);
+    for(let i=0;i<bin.length;i++) bytes[i] = bin.charCodeAt(i);
+    const n = mergeStore(JSON.parse(new TextDecoder().decode(bytes)));
+    clean();
+    localStorage.setItem('ne_mig_ask','1');
+    setTimeout(()=>{ toast(`已从旧地址迁入 ${n.ans} 条答题 · ${n.case} 条案例`); render(); }, 500);
+    return true;
+  }catch(e){
+    clean();
+    toast('自动迁移没成功，可在报告页手动导入');
+    return false;
+  }
+}
+migrateFromHash();
+window.addEventListener('hashchange', ()=>{ if(migrateFromHash()) render(); });
+
 render();
 </script>
 </body>
