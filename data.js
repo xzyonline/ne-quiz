@@ -191,7 +191,7 @@ window.BANK = [
 {id:'a21',c:'app',q:'SNMPv1 默认的团体名（community）是？',o:['public','private','admin','snmp'],a:0,e:'SNMPv1 基于团体名认证，默认 public（只读）、private（读写），安全性差。'},
 {id:'a22',c:'app',q:'DNS 解析过程中，主机首先查找的是？',o:['本地 hosts 文件与本地缓存','根域名服务器','顶级域名服务器','转发服务器'],a:0,e:'实际顺序为本地缓存 → hosts 文件 → 本地 DNS 服务器（区域记录/缓存/转发/根）。'},
 {id:'a23',c:'app',q:'URL 的组成不包括？',o:['协议','主机名或 IP','路径与文件名','MAC 地址'],a:3,e:'URL = 协议://主机[:端口]/路径/文件名，与 MAC 地址无关。'},
-{id:'a24',c:'app',q:'用于测试 DNS 正向解析的命令是？',o:['nslookup','netstat','tracert','arp'],a:1,e:'nslookup 查询域名与 DNS 记录；netstat 查看连接与路由，不能查 DNS 信息。'},
+{id:'a24',c:'app',q:'用于测试 DNS 正向解析的命令是？',o:['nslookup','netstat','tracert','arp'],a:0,e:'nslookup 查询域名与 DNS 记录；netstat 查看连接与路由，不能查 DNS 信息。'},
 {id:'a25',c:'app',q:'Netstat 命令不能完成下列哪项？',o:['显示所有连接和监听端口','显示以太网统计信息','显示路由表','查询域名解析结果'],a:3,e:'netstat 显示连接、端口、统计和路由，不提供 DNS 解析功能，查 DNS 用 nslookup。'},
 {id:'a26',c:'app',q:'下列协议中基于 UDP 工作的是？',o:['SMTP、POP3、HTTP','RIP、DHCP、TFTP、SNMP、DNS','FTP、Telnet、BGP','HTTPS、IMAP'],a:1,e:'UDP 承载：RIP、DHCP、TFTP、SNMP、DNS（查询）；TCP 承载：FTP、HTTP、SMTP、POP3、Telnet、BGP、HTTPS。'},
 {id:'a27',c:'app',q:'DNS 的“掩码排序”与“循环”功能相比？',o:['掩码排序优先级更高','循环优先级更高','两者不能共存','功能完全相同'],a:0,e:'启用掩码排序的优先级高于循环；循环可实现多台 Web 服务器共用一个域名的负载均衡。'},
@@ -322,7 +322,7 @@ window.BANK = [
 {id:'u15',c:'linux',q:'查看主机名和完整域名的配置文件是？',o:['/etc/hostname','/etc/hosts','/etc/resolv.conf','/etc/shadow'],a:0,e:'/etc/hostname 保存主机名；/etc/hosts 用于本地域名解析。'},
 {id:'u16',c:'linux',q:'查看路由表且等价于 route print 的命令是？',o:['netstat -r','netstat -a','netstat -e','netstat -o'],a:0,e:'netstat -r 显示路由表；-a 显示所有连接和监听端口；-e 显示以太网统计；-o 显示连接所属进程 ID。'},
 {id:'u17',c:'linux',q:'ls -t 的作用是？',o:['按修改时间排序','按大小排序','只列目录','逆序排列'],a:0,e:'ls -t 按时间排序、-s 按大小、-d 只列目录、-r 逆序、-a 显示隐藏文件、-l 详细信息。'},
-{id:'u18',c:'linux',q:'iptables 中用于指定策略和协议的参数分别是？',o:['-P 和 -p','-p 和 -P','-j 和 -s','-A 和 -i'],a:0,e:'-P 大写代表策略（Policy），-p 小写代表协议（protocol），-j 指定动作，-s 指定源地址。'},
+{id:'u18',c:'linux',q:'iptables 中用于指定策略和协议的参数分别是？',o:['-P 和 -p','-L 和 -F','-j 和 -s','-A 和 -i'],a:0,e:'-P 大写代表策略（Policy），-p 小写代表协议（protocol），-j 指定动作，-s 指定源地址。'},
 
 /* ========== 十三、华为配置命令 ========== */
 {id:'h1',c:'huawei',q:'华为设备进入系统视图的命令是？',o:['system-view','enable','configure terminal','sysname'],a:0,e:'用户视图 <Huawei> 下输入 system-view 进入系统视图 [Huawei]；sysname 用于修改设备名。'},
@@ -351,7 +351,7 @@ window.BANK = [
 /* ========== 十四、术语与英语单词 ========== */
 {id:'e1',c:'en',q:'命令 preempt 的含义是？',o:['抢占','预共享','优先级','探测'],a:0,e:'preempt 抢占，VRRP 中 preempt-mode 表示主备切换的抢占模式。'},
 {id:'e2',c:'en',q:'命令 aggregate 的含义是？',o:['聚合/汇总','分离','转发','绑定'],a:0,e:'aggregate 聚合（路由汇总）；summary 也是汇总（自动汇总）。'},
-{id:'e3',c:'en',q:'命令 ingress 与 egress 分别指？',o:['入节点、出节点','出节点、入节点','入口、出口','上行、下行'],a:0,e:'MPLS 中 ingress 入节点、transit 中间节点、egress 出节点。'},
+{id:'e3',c:'en',q:'MPLS 网络中，ingress 与 egress 分别指？',o:['入节点、出节点','出节点、入节点','入口、出口','上行、下行'],a:0,e:'MPLS 中 ingress 入节点、transit 中间节点、egress 出节点。'},
 {id:'e4',c:'en',q:'命令 untagged 的含义是？',o:['报文不带 VLAN 标签','报文带标签','允许通过','丢弃'],a:0,e:'untagged 不打标签，tagged 打标签；Hybrid 口可分别设置。'},
 {id:'e5',c:'en',q:'命令 port-isolate 的含义是？',o:['端口隔离','端口镜像','端口聚合','端口安全'],a:0,e:'port-isolate enable group n 将端口加入隔离组，同组内端口互相隔离。'},
 {id:'e6',c:'en',q:'命令 observe-port 的含义是？',o:['观察端口（镜像目的口）','被镜像端口','聚合端口','环回口'],a:0,e:'observe-port 指定镜像目的端口，配合 port-mirroring 把业务口流量复制过去。'},
